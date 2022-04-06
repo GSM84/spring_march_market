@@ -21,7 +21,6 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-
     public void createNewProduct(CreateNewProductDto newProductDto) {
         Product product = new Product();
         product.setTitle(newProductDto.getTitle());
@@ -29,4 +28,5 @@ public class ProductService {
 
         productRepository.save(product);
     }
+
 }

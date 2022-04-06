@@ -9,19 +9,34 @@ angular.module('market', []).controller('indexController', function ($scope, $ht
 
     $scope.deleteProduct = function (id){
         $http.delete('http://localhost:8189/market/api/v1/products/' + id)
-            .then(function (response){
+            .then(function (){
             $scope.fillTable();
         });
     };
 
-    $scope.createNewProduct = function(newProduct){
+    $scope.createNewProduct = function(){
         // console.log($scope.newProduct);
         $http.post('http://localhost:8189/market/api/v1/products', $scope.newProduct)
-            .then(function(response){
+            .then(function(){
                 $scope.newProduct = null;
                 $scope.fillTable();
             });
     };
 
+    $scope.getCart = function(){
+        $http.get('http://localhost:8189/market/api/v1/cart')
+            .then(function(response){
+                $scope.cart = response.data;
+            });
+    }
+
+    $scope.addToCart = function(id){
+        $http.post('http://localhost:8189/market/api/v1/cart/' + id)
+            .then(function (){
+               $scope.getCart();
+            });
+    }
+
     $scope.fillTable();
+    $scope.getCart();
 });
