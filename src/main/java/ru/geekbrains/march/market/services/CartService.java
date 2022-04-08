@@ -1,31 +1,44 @@
 package ru.geekbrains.march.market.services;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.march.market.dtos.ResourceNotFoundException;
 import ru.geekbrains.march.market.entities.Product;
-import ru.geekbrains.march.market.configs.ProductCart;
-import ru.geekbrains.march.market.repositories.ProductRepository;
+import ru.geekbrains.march.market.utils.Cart;
 
-import java.util.List;
-import java.util.Optional;
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductRepository productRepository;
+    private final ProductService productService;
+    private Cart cart;
 
-    private final ProductCart productCart;
-
-    public void addProductToCart(Long id) {
-        Optional<Product> product = productRepository.findById(id);
-
-        product.ifPresent(productCart::addToCart);
+    @PostConstruct
+    public void init(){
+        cart = new Cart();
+        cart.setItems(new ArrayList<>());
     }
 
-    public List<Product> getCartProducts(){
-        System.out.println("going to return cart products " + productCart.getProductList().size());
-        return productCart.getProductList();
+    public Cart getCurrentCart(){
+        return cart;
     }
 
+    public void addToCart(Long productId){
+        Product p = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException(String.format("Продукт с id-%s не существует.", productId)));
+        cart.add(p);
+    }
+
+    public void clearCart() {
+        cart.clear();
+    }
+
+    public void increaseItemCount(Long productId) {
+        cart.increaseItemCount(productId);
+    }
+
+    public void decreaseItenCount(Long productId) {
+        cart.decreaseItenCount(productId);
+    }
 }
