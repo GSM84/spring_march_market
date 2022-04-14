@@ -6,7 +6,7 @@ import ru.geekbrains.march.market.entities.User;
 
 @Component
 public class UserConverter {
-    public UserDto entityToDto(User uset){
-        return new UserDto(uset.getUserName(), uset.getEmail());
+    public UserDto entityToDto(User user){
+        return new UserDto(user.getUserName(), user.getEmail());
     }
 }

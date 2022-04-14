@@ -9,6 +9,7 @@ import ru.geekbrains.march.market.dtos.ResourceNotFoundException;
 import ru.geekbrains.march.market.services.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -19,7 +20,7 @@ public class ProductController {
 
     @GetMapping
     public List<ProductDto> getAllProducts() {
-        return productConverter.entityListToDtoList(productService.findAll());
+        return productService.findAll().stream().map(productConverter::entityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
