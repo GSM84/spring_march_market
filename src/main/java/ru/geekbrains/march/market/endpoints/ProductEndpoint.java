@@ -20,6 +20,20 @@ public class ProductEndpoint {
     private static final String NAMESPACE_URI = "http://www.gsm84.com/spring/ws/products";
     private final ProductService productService;
 
+    /*
+        Пример запроса: POST http://localhost:8189/ws
+        Header -> Content-Type: text/xml
+
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:f="http://www.gsm84.com/spring/ws/products">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <f:getProductByIdRequest>
+                 <f:id>2</f:id>
+                </f:getProductByIdRequest>
+            </soapenv:Body>
+        </soapenv:Envelope>
+     */
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductByIdRequest")
     @ResponsePayload
     public GetProductByIdResponse getProductById(@RequestPayload GetProductByIdRequest request) {
@@ -46,7 +60,7 @@ public class ProductEndpoint {
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:f="http://www.gsm84.com/spring/ws/products">
             <soapenv:Header/>
             <soapenv:Body>
-                <f:GetAllProductsRequest/>
+                <f:getAllProductsRequest/>
             </soapenv:Body>
         </soapenv:Envelope>
      */
