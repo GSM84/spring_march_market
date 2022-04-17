@@ -3,7 +3,6 @@ angular.module('market', []).controller('indexController', function ($scope, $ht
         $http.get('http://localhost:8189/market/api/v1/products')
             .then(function (response) {
                 $scope.products = response.data;
-                // console.log(response);
             });
     };
 
@@ -15,7 +14,6 @@ angular.module('market', []).controller('indexController', function ($scope, $ht
     };
 
     $scope.createNewProduct = function(){
-        // console.log($scope.newProduct);
         $http.post('http://localhost:8189/market/api/v1/products', $scope.newProduct)
             .then(function(){
                 $scope.newProduct = null;
@@ -24,10 +22,13 @@ angular.module('market', []).controller('indexController', function ($scope, $ht
     };
 
     $scope.getCart = function(){
-         $http.get('http://localhost:8189/market/api/v1/cart')
-             .then(function(response){
-                 $scope.cart = response.data;
-             });
+        if ($scope.jwtToken != null) {
+            $http.defaults.headers.common.Authorization = "Bearer " + $scope.jwtToken;
+            $http.get('http://localhost:8189/market/api/v1/cart')
+                .then(function (response) {
+                    $scope.cart = response.data;
+                });
+        }
     }
 
     $scope.addToCart = function(productId){
@@ -57,6 +58,15 @@ angular.module('market', []).controller('indexController', function ($scope, $ht
                 $scope.getCart();
             });
     }
+
+    $scope.authUser = function(){
+        $http.post('http://localhost:8189/market/auth', $scope.jwtRequest)
+            .then(function(response){
+                $scope.jwtToken = response.data["token"];
+                $scope.user = null;
+                $scope.getCart();
+            });
+    };
 
     $scope.fillTable();
     $scope.getCart();

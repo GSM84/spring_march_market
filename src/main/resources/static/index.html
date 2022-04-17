@@ -62,7 +62,19 @@
         </div>
     </form>
     <p></p>
-    <h3>Корзина</h3>
+    <h3>Корзина(требуется авторизация)</h3>
+    <p></p>
+    <form class="row g-3" ng-submit="authUser()">
+        <div class="col-auto">
+            <input type="text" class="form-control" id="username" ng-model="jwtRequest.username" placeholder="Логин">
+        </div>
+        <div class="col-auto">
+            <input type="password" class="form-control" id="password" ng-model="jwtRequest.password" placeholder="Пароль">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Авторизоваться</button>
+        </div>
+    </form>
     <p></p>
     <table class="table table-hover">
         <thead>

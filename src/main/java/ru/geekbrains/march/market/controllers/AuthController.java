@@ -14,12 +14,9 @@ import ru.geekbrains.march.market.dtos.JwtRequest;
 import ru.geekbrains.march.market.dtos.JwtResponse;
 import ru.geekbrains.march.market.dtos.ResourceNotFoundException;
 import ru.geekbrains.march.market.dtos.UserDto;
-import ru.geekbrains.march.market.entities.User;
 import ru.geekbrains.march.market.exceptions.AppError;
 import ru.geekbrains.march.market.services.UserService;
 import ru.geekbrains.march.market.utils.JwtTokenUtil;
-
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,7 +30,6 @@ public class AuthController {
     @PostMapping
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest){
         try {
-            System.out.println("user name "+ authRequest.getUsername());
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(new AppError("CHECK_TOKEN_ERROR", "Некорректный логин или пароль."), HttpStatus.UNAUTHORIZED);

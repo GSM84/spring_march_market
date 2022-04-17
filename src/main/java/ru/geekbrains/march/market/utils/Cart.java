@@ -46,7 +46,7 @@ public class Cart {
         recalculate();
     }
 
-    public void decreaseItenCount(Long productId) {
+    public void decreaseItemCount(Long productId) {
         CartItem item = findItem(productId).get();
         item.decrementQuantity();
         if (item.getQuantity() == 0) {
