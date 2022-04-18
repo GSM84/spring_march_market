@@ -30,7 +30,7 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
 
     $scope.tryToAuth = function() {
         $http.post('http://localhost:8189/market-core/auth', $scope.user)
-                .then(function successCallBack(response){
+            .then(function successCallBack(response){
                     if (response.data.token) {
                         $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                         $localStorage.marchMarketUser = {username: $scope.user.username, token: response.data.token};
@@ -39,11 +39,11 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
                     }
                 }, function errorCallBack() {
                     alert('wrong passord');
-                        $scope.user.username = null;
-                        $scope.user.username = null;
-                        $scope.user.password = null;
-                    }
-                );
+                    $scope.user.username = null;
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
+            );
     };
 
     $scope.clearUser = function() {
@@ -80,9 +80,14 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
     }
 
     $scope.addToCart = function(productId){
+        if ($scope.lastOrderId != null) {
+            $scope.clearCart();
+            $scope.lastOrderId = null;
+        }
+
         $http.post('http://localhost:8190/market-cart/api/v1/cart/add/' + productId)
             .then(function (){
-               $scope.loadCart();
+                $scope.loadCart();
             });
     }
 
@@ -107,8 +112,11 @@ angular.module('market', ['ngStorage']).controller('indexController', function (
             });
     }
 
-    $scope.makeOrder = function() {
-        alert('make order');
+    $scope.createNewOrder = function() {
+        $http.post('http://localhost:8189/market-core/api/v1/orders')
+            .then(function (response){
+                $scope.lastOrderId = response.data;
+            });
     };
 
     $scope.loadProducts();

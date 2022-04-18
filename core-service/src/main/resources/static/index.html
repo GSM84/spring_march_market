@@ -55,7 +55,7 @@
             <td>ID</td>
             <td>Название</td>
             <td>Цена</td>
-<!--            <td></td>-->
+            <!--            <td></td>-->
             <td></td>
         </tr>
         </thead>
@@ -64,9 +64,9 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
-<!--            <td>-->
-<!--                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>-->
-<!--            </td>-->
+            <!--            <td>-->
+            <!--                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>-->
+            <!--            </td>-->
             <td>
                 <button class="btn btn-primary mb-3" ng-click="addToCart(p.id)">Добавить в корзину</button>
             </td>
@@ -91,10 +91,11 @@
         </div>
     </form>-->
     <p></p>
-    <h3>Корзина</h3>
+    <h3 ng-show="lastOrderId == null">Корзина</h3>
+    <h3 ng-show="lastOrderId != null" ng-model="lastOrderId">Номер Вашего заказа - {{lastOrderId.value}}</h3>
     <p></p>
     <p></p>
-    <table class="table table-hover">
+    <table class="table table-hover" ng-show="cart.totalPrice > 0">
         <thead>
         <tr>
             <td>ID</td>
@@ -105,22 +106,23 @@
         </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="c in cart.items">
-                <td>{{c.productId}}</td>
-                <td>{{c.productTitle}}</td>
-                <td>{{c.quantity}}</td>
-                <td>{{c.pricePerProduct + ' x ' + c.quantity + ' = ' + c.price}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-click="increaseItemCount(c.productId)">+</button>/<button class="btn btn-danger" ng-click="decreaseItemCount(c.productId)">-</button>
-                </td>
-            </tr>
+        <tr ng-repeat="c in cart.items">
+            <td>{{c.productId}}</td>
+            <td>{{c.productTitle}}</td>
+            <td>{{c.quantity}}</td>
+            <td>{{c.pricePerProduct + ' x ' + c.quantity + ' = ' + c.price}}</td>
+            <td ng-show="lastOrderId == null">
+                <button class="btn btn-primary" ng-click="increaseItemCount(c.productId)">+</button>/
+                <button class="btn btn-danger" ng-click="decreaseItemCount(c.productId)">-</button>
+            </td>
+        </tr>
         </tbody>
         <tr ng-model="cart">
             <td></td>
             <td>Итого:</td>
             <td >{{cart.totalPrice}}</td>
-            <td><button class="btn btn-primary" ng-show="cart.totalPrice > 0" ng-click="makeOrder()">Оформить заказ</button></td>
-            <td><button class="btn btn-danger" ng-show="cart.totalPrice > 0" ng-click="clearCart()">Очистить корзину</button></td>
+            <td><button class="btn btn-primary" ng-show="cart.totalPrice > 0 && isUserLoggedIn() && lastOrderId == null" ng-click="createNewOrder()">Оформить заказ</button></td>
+            <td><button class="btn btn-danger" ng-show="cart.totalPrice > 0 && lastOrderId == null" ng-click="clearCart()">Очистить корзину</button></td>
         </tr>
     </table>
 </div>

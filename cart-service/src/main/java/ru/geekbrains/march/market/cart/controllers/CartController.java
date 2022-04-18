@@ -24,7 +24,6 @@ public class CartController {
     @PostMapping("/add/{productId}")
     @ResponseStatus(HttpStatus.OK)
     public void addProductToCartToCart(@PathVariable Long productId){
-        System.out.println("add to cart");
         cartService.addToCart(productId);
     }
 
