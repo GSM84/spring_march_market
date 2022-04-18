@@ -19,9 +19,9 @@ insert into categories(title) values
 ('Electronic');
 
 insert into products (title, price, category_id) values
-('Bread', 32.00, 1),
-('Milk', 120.00, 1),
-('Butter', 320.00, 1),
+('Bread', 32.40, 1),
+('Milk', 120.20, 1),
+('Butter', 320.30, 1),
 ('Cheese', 500.00, 1);
 
 create table users (

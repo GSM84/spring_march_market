@@ -11,16 +11,11 @@ import java.util.stream.Collectors;
 public class CartConverter {
 
     public CartDto cartToDto(Cart cart) {
-        CartDto cartDto = new CartDto();
-        cartDto.setTotalPrice(cart.getTotalPrice());
-        cartDto.setItems(cart.getItems().stream().map(i -> new CartItemDto(
+        return new CartDto(cart.getTotalPrice(), cart.getItems().stream().map(i -> new CartItemDto(
                 i.getProductId(),
                 i.getProductTitle(),
                 i.getQuantity(),
                 i.getPricePerProduct(),
-                i.getPrice()
-        )).collect(Collectors.toList()));
-
-        return  cartDto;
+                i.getPrice())).collect(Collectors.toList()));
     }
 }
