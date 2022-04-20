@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.march.market.api.StringResponse;
 import ru.geekbrains.march.market.core.services.OrderService;
-import ru.geekbrains.march.market.core.services.UserService;
-
 import java.security.Principal;
 
 @RestController
@@ -17,13 +15,11 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    private final UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StringResponse createNewOrder(Principal principal) {
-        String username = principal.getName();
 
-        return new StringResponse(orderService.createNewOrder(userService.findByUserName(username).get()).toString());
+        return new StringResponse(orderService.createNewOrder(principal.getName()).toString());
     }
 }
