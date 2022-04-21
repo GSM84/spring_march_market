@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.march.market.api.StringResponse;
 import ru.geekbrains.march.market.core.services.OrderService;
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,8 +14,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StringResponse createNewOrder(Principal principal) {
-        System.out.println("oredr request");
-        return new StringResponse(orderService.createNewOrder(principal.getName()).toString());
+    public StringResponse createNewOrder(@RequestHeader String username) {
+        return new StringResponse(orderService.createNewOrder(username).toString());
     }
 }
