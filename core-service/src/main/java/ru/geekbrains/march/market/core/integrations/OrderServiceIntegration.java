@@ -8,9 +8,9 @@ import ru.geekbrains.march.market.api.CartDto;
 @Component
 @RequiredArgsConstructor
 public class OrderServiceIntegration {
-    private final RestTemplate restTemplate;
+    //private final RestTemplate restTemplate;
 
-    public CartDto getCurrentCart() {
-        return restTemplate.getForObject("http://localhost:8190/market-cart/api/v1/cart", CartDto.class);
-    }
+//    public CartDto getCurrentCart() {
+//        return restTemplate.getForObject("http://localhost:8190/market-cart/api/v1/cart", CartDto.class);
+//    }
 }
