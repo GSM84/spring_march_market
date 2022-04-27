@@ -16,7 +16,7 @@ public class CartServiceIntegration {
                 .uri("/api/v1/cart/")
                 .header("username", userName)
                 .retrieve()
-                .bodyToFlux(CartDto.class)
-                .blockLast();
+                .bodyToMono(CartDto.class)
+                .block();
     }
 }
