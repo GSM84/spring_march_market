@@ -1,4 +1,4 @@
-package ru.geekbrains.march.market.core.controllers;
+package ru.geekbrains.march.market.auth.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,22 +13,19 @@ import ru.geekbrains.march.market.api.JwtRequest;
 import ru.geekbrains.march.market.api.JwtResponse;
 import ru.geekbrains.march.market.api.ResourceNotFoundException;
 import ru.geekbrains.march.market.api.UserDto;
-import ru.geekbrains.march.market.core.converters.UserConverter;
+import ru.geekbrains.march.market.auth.exceptions.AppError;
+import ru.geekbrains.march.market.auth.services.UserService;
+import ru.geekbrains.march.market.auth.utils.JwtTokenUtil;
 
-import ru.geekbrains.march.market.core.exceptions.AppError;
-import ru.geekbrains.march.market.core.services.UserService;
-import ru.geekbrains.march.market.core.utils.JwtTokenUtil;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
-    private final UserConverter userConverter;
 
-    @PostMapping
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest){
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
@@ -40,9 +37,4 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @GetMapping("/get_my_email")
-    public UserDto getUserEmail() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userConverter.entityToDto(userService.findByUserName(username).orElseThrow(() -> new ResourceNotFoundException(String.format("Пользователь с именем-%s не существует.", username))));
-    }
 }
