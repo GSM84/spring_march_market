@@ -35,7 +35,7 @@ public class CartController {
     @PostMapping("/decrease/{productId}")
     @ResponseStatus(HttpStatus.OK)
     public void decreaseItemCount(@PathVariable Long productId){
-        cartService.decreaseItenCount(productId);
+        cartService.decreaseItemCount(productId);
     }
 
     @PostMapping("/clear")

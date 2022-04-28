@@ -13,12 +13,10 @@ import ru.geekbrains.march.market.api.ProductDto;
 import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,7 +42,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void createProductTest() throws Exception{
+    public void createProductTest() throws Exception {
         ProductDto productDto = new ProductDto(null, "Water", BigDecimal.valueOf(1.15), "Food");
         mockMvc
                 .perform(
@@ -56,5 +54,37 @@ public class ProductControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    public void deleteProductByIdTest() throws Exception {
+        mockMvc
+                .perform(
+                        delete("/api/v1/products/1")
+
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc
+                .perform(
+                        get("/api/v1/products/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void getProductByIdTest() throws Exception {
+        mockMvc
+                .perform(
+                        get("/api/v1/products/2")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.title", is("Milk")));
+    }
 
 }
