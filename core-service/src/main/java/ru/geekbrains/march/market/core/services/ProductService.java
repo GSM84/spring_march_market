@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import ru.geekbrains.march.market.api.ProductDto;
+import ru.geekbrains.march.market.api.ResourceNotFoundException;
 import ru.geekbrains.march.market.core.entities.Product;
 import ru.geekbrains.march.market.core.repositories.ProductRepository;
 
@@ -28,7 +29,10 @@ public class ProductService {
         Product product = new Product();
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
-        product.setCategory(categoryService.findCategoryByTitle(productDto.getCategoryTitle()));
+        product.setCategory(categoryService.findCategoryByTitle(productDto.getCategoryTitle())
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Категория %s не найдена.", productDto.getCategoryTitle()))
+                )
+        );
 
         productRepository.save(product);
     }

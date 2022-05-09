@@ -38,7 +38,7 @@ public class CartService {
         cart.increaseItemCount(productId);
     }
 
-    public void decreaseItenCount(Long productId) {
+    public void decreaseItemCount(Long productId) {
         cart.decreaseItemCount(productId);
     }
 }
