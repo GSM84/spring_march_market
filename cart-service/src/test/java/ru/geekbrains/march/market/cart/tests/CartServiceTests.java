@@ -36,11 +36,11 @@ public class CartServiceTests {
                 .when(productServiceIntegration)
                 .findById(4L);
 
-        cartService.addToCart(4L);
+        cartService.addToCart("bob", 4L);
 
-        assertThat(cartService.getCurrentCart().getTotalPrice(), is(BigDecimal.valueOf(500.00)));
+        assertThat(cartService.getCurrentCart("bob").getTotalPrice(), is(BigDecimal.valueOf(500.00)));
 
-        cartService.clearCart();
+        cartService.clearCart("bob");
 
     }
 
@@ -56,13 +56,13 @@ public class CartServiceTests {
                 .when(productServiceIntegration)
                 .findById(4L);
 
-        cartService.addToCart(4L);
+        cartService.addToCart("bob", 4L);
 
-        assertThat(cartService.getCurrentCart().getTotalPrice(), is(BigDecimal.valueOf(500.00)));
+        assertThat(cartService.getCurrentCart("bob").getTotalPrice(), is(BigDecimal.valueOf(500.00)));
 
-        cartService.clearCart();
+        cartService.clearCart("bob");
 
-        assertThat(cartService.getCurrentCart().getTotalPrice(), is(BigDecimal.ZERO));
+        assertThat(cartService.getCurrentCart("bob").getTotalPrice(), is(BigDecimal.ZERO));
     }
 
     @Test
@@ -77,16 +77,16 @@ public class CartServiceTests {
                 .when(productServiceIntegration)
                 .findById(4L);
 
-        cartService.addToCart(4L);
+        cartService.addToCart("bob", 4L);
 
-        cartService.getCurrentCart().increaseItemCount(4L);
-        cartService.getCurrentCart().increaseItemCount(4L);
-        cartService.getCurrentCart().increaseItemCount(4L);
+        cartService.getCurrentCart("bob").increaseItemCount(4L);
+        cartService.getCurrentCart("bob").increaseItemCount(4L);
+        cartService.getCurrentCart("bob").increaseItemCount(4L);
 
-        assertThat(cartService.getCurrentCart().getTotalPrice(), is(BigDecimal.valueOf(2000.00)));
-        assertThat(cartService.getCurrentCart().getItems().get(0).getQuantity(), is(4));
+        assertThat(cartService.getCurrentCart("bob").getTotalPrice(), is(BigDecimal.valueOf(2000.00)));
+        assertThat(cartService.getCurrentCart("bob").getItems().get(0).getQuantity(), is(4));
 
-        cartService.clearCart();
+        cartService.clearCart("bob");
 
     }
 
@@ -102,23 +102,23 @@ public class CartServiceTests {
                 .when(productServiceIntegration)
                 .findById(4L);
 
-        cartService.addToCart(4L);
+        cartService.addToCart("bob", 4L);
 
-        cartService.getCurrentCart().increaseItemCount(4L);
+        cartService.getCurrentCart("bob").increaseItemCount(4L);
 
-        assertThat(cartService.getCurrentCart().getTotalPrice(), is(BigDecimal.valueOf(1000.00)));
-        assertThat(cartService.getCurrentCart().getItems().get(0).getQuantity(), is(2));
+        assertThat(cartService.getCurrentCart("bob").getTotalPrice(), is(BigDecimal.valueOf(1000.00)));
+        assertThat(cartService.getCurrentCart("bob").getItems().get(0).getQuantity(), is(2));
 
-        cartService.getCurrentCart().decreaseItemCount(4L);
+        cartService.getCurrentCart("bob").decreaseItemCount(4L);
 
-        assertThat(cartService.getCurrentCart().getTotalPrice(), is(BigDecimal.valueOf(500.00)));
-        assertThat(cartService.getCurrentCart().getItems().get(0).getQuantity(), is(1));
+        assertThat(cartService.getCurrentCart("bob").getTotalPrice(), is(BigDecimal.valueOf(500.00)));
+        assertThat(cartService.getCurrentCart("bob").getItems().get(0).getQuantity(), is(1));
 
-        cartService.getCurrentCart().decreaseItemCount(4L);
+        cartService.getCurrentCart("bob").decreaseItemCount(4L);
 
-        assertThat(cartService.getCurrentCart().getTotalPrice(), is(BigDecimal.ZERO));
+        assertThat(cartService.getCurrentCart("bob").getTotalPrice(), is(BigDecimal.ZERO));
 
-        cartService.clearCart();
+        cartService.clearCart("bob");
 
     }
 }
