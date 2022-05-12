@@ -46,4 +46,10 @@ public class CartService {
     public void decreaseItemCount(String cartId, Long productId) {
         carts.get(cartId).decreaseItemCount(productId);
     }
+
+    public void mergeGuestCart(String username, String guestCartId) {
+        if (getCurrentCart(guestCartId).getItems().size() > 0 ) {
+            carts.put(username, getCurrentCart(guestCartId));
+        }
+    }
 }

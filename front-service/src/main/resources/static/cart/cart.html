@@ -23,13 +23,47 @@
                 <button class="btn btn-danger" ng-click="decreaseItemCount(c.productId)">-</button>
             </td>
         </tr>
+
         </tbody>
-        <tr ng-model="cart">
-            <td></td>
-            <td>Итого:</td>
-            <td >{{cart.totalPrice}}</td>
-            <td><button class="btn btn-primary" ng-show="cart.totalPrice > 0 && isUserLoggedIn()" ng-click="createNewOrder()">Оформить заказ</button></td>
-            <td><button class="btn btn-danger" ng-show="cart.totalPrice > 0  == null" ng-click="clearCart()">Очистить корзину</button></td>
-        </tr>
+<!--        <tr ng-model="cart">-->
+<!--            <td></td>-->
+<!--            <td>Итого:</td>-->
+<!--            <td >{{cart.totalPrice}}</td>-->
+<!--            <td><button class="btn btn-primary" ng-show="cart.totalPrice > 0 && isUserLoggedIn()" ng-click="createNewOrder()">Оформить заказ</button></td>-->
+<!--            <td><button class="btn btn-danger" ng-show="cart.totalPrice > 0  == null" ng-click="clearCart()">Очистить корзину</button></td>-->
+<!--        </tr>-->
+        <tfoot ng-model="cart">
+            <tr>
+                <td></td>
+                <td>Итого:</td>
+                <td >{{cart.totalPrice}}</td>
+                <td><button class="btn btn-primary" ng-show="cart.totalPrice > 0 && isUserLoggedIn()" ng-click="createNewOrder()">Оформить заказ</button></td>
+                <td><button class="btn btn-danger" ng-show="cart.totalPrice > 0  == null" ng-click="clearCart()">Очистить корзину</button></td>
+            </tr>
+            <tr ng-show="cart.totalPrice > 0 && isUserLoggedIn()">
+                <td></td>
+                <td><input id="address" class="form-control" ng-model="deliveryDetails.address" type="text"
+                           aria-describedby="inputGroup-sizing-sm"  placeholder="Адрес доставки"></td>
+                <td><input id="phone" class="form-control" ng-model="deliveryDetails.phone" type="text"
+                           aria-describedby="inputGroup-sizing-sm"  placeholder="Телефон контакта "></td>
+                </td>
+            </tr>
+        </tfoot>
+
+
+
+<!--        <tr>-->
+<!--            <form class="align-middle">-->
+<!--                <div class="input-group input-group-sm" style="padding: 4px;">-->
+<!--                    <td>Данные доставки</td>-->
+<!--                    <td><input id="address" class="form-control" ng-model="contact.address" type="text"-->
+<!--                               aria-describedby="inputGroup-sizing-sm"  placeholder="Адрес доставки"></td>-->
+<!--                    <td><input id="phone" class="form-control" ng-model="contact.phone" type="text"-->
+<!--                               aria-describedby="inputGroup-sizing-sm"  placeholder="Телефон контакта "></td>-->
+<!--                    </td>-->
+<!--                </div>-->
+<!--            </form>-->
+
+<!--        </tr>-->
     </table>
 </div>

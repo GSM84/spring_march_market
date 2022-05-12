@@ -58,7 +58,9 @@ public class CartController {
     }
 
     private String selectCartId(String username, String guestCartId) {
+        if (username != null) {
+            cartService.mergeGuestCart(username, guestCartId);
+        }
         return username != null?username:guestCartId;
     }
-
 }

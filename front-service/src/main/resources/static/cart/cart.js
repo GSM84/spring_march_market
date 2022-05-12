@@ -29,8 +29,10 @@ angular.module('market').controller('cartController', function($scope, $http, $l
     }
 
     $scope.createNewOrder = function() {
-        $http.post('http://localhost:5555/core/api/v1/orders')
+        $http.post('http://localhost:5555/core/api/v1/orders', $scope.deliveryDetails)
             .then(function (){
+                $scope.deliveryDetails.address = null;
+                $scope.deliveryDetails.phone = null;
                 $scope.clearCart();
             });
     };

@@ -9,8 +9,7 @@ angular.module('market').controller('storeController', function($scope, $http, $
 
     $scope.addToCart = function(productId){
         $http.post('http://localhost:5555/cart/api/v1/cart/' + $localStorage.marchMarketGuestCartId + '/add/' + productId)
-            .then(function (){
-            });
+            .then(function () {});
     };
 
     $scope.loadProducts();

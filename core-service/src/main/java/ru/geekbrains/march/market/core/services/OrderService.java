@@ -3,6 +3,7 @@ package ru.geekbrains.march.market.core.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.march.market.api.CartDto;
+import ru.geekbrains.march.market.api.DeliveryDetailsDto;
 import ru.geekbrains.march.market.api.ResourceNotFoundException;
 import ru.geekbrains.march.market.core.entities.Order;
 import ru.geekbrains.march.market.core.entities.OrderItem;
@@ -22,7 +23,7 @@ public class OrderService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void createNewOrder(String userName) {
+    public void createNewOrder(String userName, DeliveryDetailsDto deliveryDetails) {
 
         CartDto cartDto = cartServiceIntegration.getUserCart(userName);
         if (cartDto.getItems().isEmpty()) {
@@ -31,6 +32,10 @@ public class OrderService {
         Order order = new Order();
         order.setUsername(userName);
         order.setTotalPrice(cartDto.getTotalPrice());
+        if (deliveryDetails != null) {
+            order.setAddress(deliveryDetails.getAddress());
+            order.setPhone(deliveryDetails.getPhone());
+        }
 
         order.setItems(new ArrayList<>());
         cartDto.getItems().forEach(ci -> {
@@ -41,7 +46,6 @@ public class OrderService {
             item.setQuantity(ci.getQuantity());
             order.getItems().add(item);
             item.setOrder(order);
-
         });
 
         orderRepository.save(order);

@@ -17,7 +17,6 @@ public class Cart {
     public Cart() {
         this.items = new ArrayList<>();
         this.totalPrice = BigDecimal.ZERO;
-
     }
 
     public void add(ProductDto p){
