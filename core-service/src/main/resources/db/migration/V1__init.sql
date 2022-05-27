@@ -26,11 +26,13 @@ insert into products (title, price, category_id) values
 
 create table orders
 (
-    id              bigserial primary key,
-    username        varchar(255),
-    total_price     numeric(8, 2),
-    created_at      timestamp default current_timestamp,
-    updated_at      timestamp default current_timestamp
+    id               bigserial primary key,
+    username         varchar(255),
+    total_price      numeric(8, 2),
+    delivery_address varchar(255),
+    contact_phone    varchar(255),
+    created_at       timestamp default current_timestamp,
+    updated_at       timestamp default current_timestamp
 );
 
 create table orders_items
