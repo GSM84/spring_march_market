@@ -1,6 +1,7 @@
 package ru.geekbrains.march.market.core.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.march.market.api.ProductDto;
@@ -8,8 +9,7 @@ import ru.geekbrains.march.market.api.ResourceNotFoundException;
 import ru.geekbrains.march.market.core.converters.ProductConverter;
 import ru.geekbrains.march.market.core.services.ProductService;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -19,8 +19,8 @@ public class ProductController {
     private final ProductConverter productConverter;
 
     @GetMapping
-    public List<ProductDto> getAllProducts() {
-        return productService.findAll().stream().map(productConverter::entityToDto).collect(Collectors.toList());
+    public Page<ProductDto> getAllProducts(@RequestParam Map<String, String> allParams) {
+        return productService.findAll(allParams).map(productConverter::entityToDto);
     }
 
     @GetMapping("/{id}")

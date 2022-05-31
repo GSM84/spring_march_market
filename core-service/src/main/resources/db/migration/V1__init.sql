@@ -22,6 +22,13 @@ insert into products (title, price, category_id) values
 ('Bread', 32.40, 1),
 ('Milk', 120.20, 1),
 ('Butter', 320.30, 1),
+('Cucumber', 10.30, 1),
+('Beef', 800.30, 1),
+('Salmon', 1000.30, 1),
+('Apple pie', 150.30, 1),
+('Dark chocolate', 1000.30, 1),
+('Chicken', 280.30, 1),
+('Ice cream', 650.30, 1),
 ('Cheese', 500.00, 1);
 
 create table orders
