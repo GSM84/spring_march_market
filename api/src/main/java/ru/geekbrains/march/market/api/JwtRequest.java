@@ -1,7 +1,13 @@
 package ru.geekbrains.march.market.api;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Модель запроса токена")
 public class JwtRequest {
+    @Schema(description = "Имя пользователя", required = true, example = "Иван")
     private String username;
+
+    @Schema(description = "Пароль", required = true, example = "123123")
     private String password;
 
     public JwtRequest() {

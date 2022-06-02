@@ -12,6 +12,7 @@ angular.module('market').controller('storeController', function($scope, $http, $
             }
         }).then(function (response) {
             $scope.productsPage = response.data;
+            console.log($scope.productsPage);
             $scope.generatePagesList($scope.productsPage.totalPages);
         });
     };
